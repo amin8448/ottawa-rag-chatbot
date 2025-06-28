@@ -383,7 +383,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Amin Nabavi**
-- 🔗 **LinkedIn**: [Connect with me on LinkedIn](https://linkedin.com/in/amin-nabavi)
+- 🔗 **LinkedIn**: [Connect with me on LinkedIn](https://www.linkedin.com/in/aminnabavi/)
 - 🌐 **Basketball Stats Project**: [aminnabavi.ddns.net](http://aminnabavi.ddns.net)
 - 📧 **Email**: amin8448@gmail.com
 - 🐙 **GitHub**: [@amin8448](https://github.com/amin8448)
