@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # Main Ottawa RAG Chatbot application
+  ottawa-chatbot:
+    build: .
+    ports:
+      - "7860:7860"
+    environment:
+      - ENVIRONMENT=development
+      - DEBUG=True
+      - VECTOR_DB_PATH=/app/data/vector_store
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./.env:/app/.env
+    depends_on:
+      - redis
+    networks:
+      - ottawa-network
+    restart: unless-stopped
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ottawa-network
+    restart: unless-stopped
+
+  # PostgreSQL for analytics (optional)
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ottawa_rag
+      POSTGRES_USER: ottawa
+      POSTGRES_PASSWORD: ottawa_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ottawa-network
+    restart: unless-stopped
+
+  # Nginx reverse proxy (for production)
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deployment/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./deployment/nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - ottawa-chatbot
+    networks:
+      - ottawa-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+volumes:
+  redis_data:
+  postgres_data:
+
+networks:
+  ottawa-network:
+    driver: bridge
+
+# Development override file: docker-compose.override.yml
+---
+# To run different configurations:
+# 
+# Development (default):
+# docker-compose up
+#
+# Production:
+# docker-compose --profile production up
+#
+# Just the chatbot:
+# docker-compose up ottawa-chatbot
+#
+# With external services:
+# docker-compose up ottawa-chatbot redis postgres

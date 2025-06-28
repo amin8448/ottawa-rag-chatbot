@@ -19,10 +19,10 @@ from groq import Groq
 import pandas as pd
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-# Custom modules
-from .embeddings import EmbeddingManager
-from .vector_store import VectorStore
-from .llm_interface import LLMInterface
+# Custom modules - absolute imports
+from embeddings import EmbeddingManager
+from vector_store import VectorStore
+from llm_interface import LLMInterface
 
 class OttawaRAGPipeline:
     """
