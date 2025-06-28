@@ -264,7 +264,6 @@ class DataProcessor:
                     # Process each chunk
                     for chunk_idx, chunk_text in enumerate(text_chunks):
                         if len(chunk_text) >= self.min_chunk_length:
-
                             # Extract keywords for this chunk
                             keywords = self.extract_keywords(chunk_text)
 

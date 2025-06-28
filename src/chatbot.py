@@ -164,7 +164,6 @@ class OttawaChatbot:
         with gr.Blocks(
             css=custom_css, title="Ottawa City Services Assistant"
         ) as interface:
-
             # Header
             with gr.Row():
                 gr.HTML(
